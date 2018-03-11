@@ -3,31 +3,31 @@ oszi-tests.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  000001fa  2**0
+  0 .data         00000000  00800100  00800100  000001f6  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000186  00000000  00000000  00000074  2**1
+  1 .text         00000182  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000003  00800100  00800100  000001fa  2**0
+  2 .bss          00000003  00800100  00800100  000001f6  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000001fa  2**0
+  3 .comment      00000030  00000000  00000000  000001f6  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000022c  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000228  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000040  00000000  00000000  0000026c  2**0
+  5 .debug_aranges 00000040  00000000  00000000  00000268  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000071d  00000000  00000000  000002ac  2**0
+  6 .debug_info   0000071d  00000000  00000000  000002a8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 0000065e  00000000  00000000  000009c9  2**0
+  7 .debug_abbrev 0000065e  00000000  00000000  000009c5  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000292  00000000  00000000  00001027  2**0
+  8 .debug_line   0000028c  00000000  00000000  00001023  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000bc  00000000  00000000  000012bc  2**2
+  9 .debug_frame  000000bc  00000000  00000000  000012b0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000387  00000000  00000000  00001378  2**0
+ 10 .debug_str    00000387  00000000  00000000  0000136c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000107  00000000  00000000  000016ff  2**0
+ 11 .debug_loc    00000107  00000000  00000000  000016f3  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000030  00000000  00000000  00001806  2**0
+ 12 .debug_ranges 00000030  00000000  00000000  000017fa  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -45,7 +45,7 @@ Disassembly of section .text:
   24:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   28:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   2c:	0c 94 62 00 	jmp	0xc4	; 0xc4 <__vector_11>
-  30:	0c 94 88 00 	jmp	0x110	; 0x110 <__vector_12>
+  30:	0c 94 86 00 	jmp	0x10c	; 0x10c <__vector_12>
   34:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   38:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   3c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
@@ -81,8 +81,8 @@ Disassembly of section .text:
   7e:	a3 30       	cpi	r26, 0x03	; 3
   80:	b2 07       	cpc	r27, r18
   82:	e1 f7       	brne	.-8      	; 0x7c <.do_clear_bss_loop>
-  84:	0e 94 be 00 	call	0x17c	; 0x17c <main>
-  88:	0c 94 c1 00 	jmp	0x182	; 0x182 <_exit>
+  84:	0e 94 bc 00 	call	0x178	; 0x178 <main>
+  88:	0c 94 bf 00 	jmp	0x17e	; 0x17e <_exit>
 
 0000008c <__bad_interrupt>:
   8c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -141,111 +141,108 @@ ISR (TIMER1_COMPA_vect)
   e2:	ef 93       	push	r30
   e4:	ff 93       	push	r31
 	// reset timer1
-	PORT(B)=1<<5;
-  e6:	80 e2       	ldi	r24, 0x20	; 32
-  e8:	85 b9       	out	0x05, r24	; 5
 	clock_inc();
-  ea:	0e 94 48 00 	call	0x90	; 0x90 <clock_inc>
+  e6:	0e 94 48 00 	call	0x90	; 0x90 <clock_inc>
 }
-  ee:	ff 91       	pop	r31
-  f0:	ef 91       	pop	r30
-  f2:	bf 91       	pop	r27
-  f4:	af 91       	pop	r26
-  f6:	9f 91       	pop	r25
-  f8:	8f 91       	pop	r24
-  fa:	7f 91       	pop	r23
-  fc:	6f 91       	pop	r22
-  fe:	5f 91       	pop	r21
- 100:	4f 91       	pop	r20
- 102:	3f 91       	pop	r19
- 104:	2f 91       	pop	r18
+  ea:	ff 91       	pop	r31
+  ec:	ef 91       	pop	r30
+  ee:	bf 91       	pop	r27
+  f0:	af 91       	pop	r26
+  f2:	9f 91       	pop	r25
+  f4:	8f 91       	pop	r24
+  f6:	7f 91       	pop	r23
+  f8:	6f 91       	pop	r22
+  fa:	5f 91       	pop	r21
+  fc:	4f 91       	pop	r20
+  fe:	3f 91       	pop	r19
+ 100:	2f 91       	pop	r18
+ 102:	0f 90       	pop	r0
+ 104:	0f be       	out	0x3f, r0	; 63
  106:	0f 90       	pop	r0
- 108:	0f be       	out	0x3f, r0	; 63
- 10a:	0f 90       	pop	r0
- 10c:	1f 90       	pop	r1
- 10e:	18 95       	reti
+ 108:	1f 90       	pop	r1
+ 10a:	18 95       	reti
 
-00000110 <__vector_12>:
+0000010c <__vector_12>:
 
 ISR (TIMER1_COMPB_vect)
 {
- 110:	1f 92       	push	r1
+ 10c:	1f 92       	push	r1
+ 10e:	0f 92       	push	r0
+ 110:	0f b6       	in	r0, 0x3f	; 63
  112:	0f 92       	push	r0
- 114:	0f b6       	in	r0, 0x3f	; 63
- 116:	0f 92       	push	r0
- 118:	11 24       	eor	r1, r1
- 11a:	8f 93       	push	r24
+ 114:	11 24       	eor	r1, r1
+ 116:	8f 93       	push	r24
 	PORT(C)&=0xF0;
- 11c:	88 b1       	in	r24, 0x08	; 8
- 11e:	80 7f       	andi	r24, 0xF0	; 240
- 120:	88 b9       	out	0x08, r24	; 8
+ 118:	88 b1       	in	r24, 0x08	; 8
+ 11a:	80 7f       	andi	r24, 0xF0	; 240
+ 11c:	88 b9       	out	0x08, r24	; 8
 	// servocontrol
 
 }
- 122:	8f 91       	pop	r24
+ 11e:	8f 91       	pop	r24
+ 120:	0f 90       	pop	r0
+ 122:	0f be       	out	0x3f, r0	; 63
  124:	0f 90       	pop	r0
- 126:	0f be       	out	0x3f, r0	; 63
- 128:	0f 90       	pop	r0
- 12a:	1f 90       	pop	r1
- 12c:	18 95       	reti
+ 126:	1f 90       	pop	r1
+ 128:	18 95       	reti
 
-0000012e <init>:
+0000012a <init>:
 void init(){
 	DDR(B)=1<<5;
- 12e:	80 e2       	ldi	r24, 0x20	; 32
- 130:	84 b9       	out	0x04, r24	; 4
+ 12a:	80 e2       	ldi	r24, 0x20	; 32
+ 12c:	84 b9       	out	0x04, r24	; 4
 	CONFIG_BYTE(TCCR1A , 0 , BIT(WGM10) | BIT(WGM11) | BIT(COM1A1) | BIT(COM1B1));// CTC Mode mode TOP determined by OCR1A //
- 132:	e0 e8       	ldi	r30, 0x80	; 128
- 134:	f0 e0       	ldi	r31, 0x00	; 0
- 136:	80 81       	ld	r24, Z
- 138:	8c 75       	andi	r24, 0x5C	; 92
- 13a:	80 83       	st	Z, r24
+ 12e:	e0 e8       	ldi	r30, 0x80	; 128
+ 130:	f0 e0       	ldi	r31, 0x00	; 0
+ 132:	80 81       	ld	r24, Z
+ 134:	8c 75       	andi	r24, 0x5C	; 92
+ 136:	80 83       	st	Z, r24
 	CONFIG_BYTE(TCCR1B , BIT(WGM12) | BIT(CS11) , BIT(CS10) | BIT(CS12) | BIT(WGM13));    // set prescaler to 1/8
- 13c:	e1 e8       	ldi	r30, 0x81	; 129
- 13e:	f0 e0       	ldi	r31, 0x00	; 0
- 140:	80 81       	ld	r24, Z
- 142:	80 7e       	andi	r24, 0xE0	; 224
- 144:	8a 60       	ori	r24, 0x0A	; 10
- 146:	80 83       	st	Z, r24
+ 138:	e1 e8       	ldi	r30, 0x81	; 129
+ 13a:	f0 e0       	ldi	r31, 0x00	; 0
+ 13c:	80 81       	ld	r24, Z
+ 13e:	80 7e       	andi	r24, 0xE0	; 224
+ 140:	8a 60       	ori	r24, 0x0A	; 10
+ 142:	80 83       	st	Z, r24
 	CONFIG_BYTE(TIFR1 , BIT(OCF1A) | BIT(OCF1B),0);
- 148:	86 b3       	in	r24, 0x16	; 22
- 14a:	86 60       	ori	r24, 0x06	; 6
- 14c:	86 bb       	out	0x16, r24	; 22
+ 144:	86 b3       	in	r24, 0x16	; 22
+ 146:	86 60       	ori	r24, 0x06	; 6
+ 148:	86 bb       	out	0x16, r24	; 22
 	CONFIG_BYTE(TIMSK1 , BIT(OCIE1A)|BIT(OCIE1B), 0);
- 14e:	ef e6       	ldi	r30, 0x6F	; 111
- 150:	f0 e0       	ldi	r31, 0x00	; 0
- 152:	80 81       	ld	r24, Z
- 154:	86 60       	ori	r24, 0x06	; 6
- 156:	80 83       	st	Z, r24
+ 14a:	ef e6       	ldi	r30, 0x6F	; 111
+ 14c:	f0 e0       	ldi	r31, 0x00	; 0
+ 14e:	80 81       	ld	r24, Z
+ 150:	86 60       	ori	r24, 0x06	; 6
+ 152:	80 83       	st	Z, r24
 	OCR1A = 5000;      // set count to 1500 us - 90 degree
- 158:	88 e8       	ldi	r24, 0x88	; 136
- 15a:	93 e1       	ldi	r25, 0x13	; 19
- 15c:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
- 160:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
+ 154:	88 e8       	ldi	r24, 0x88	; 136
+ 156:	93 e1       	ldi	r25, 0x13	; 19
+ 158:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
+ 15c:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
 	OCR1B = 1500;      // set count to 1500 us - 90 degree
- 164:	8c ed       	ldi	r24, 0xDC	; 220
- 166:	95 e0       	ldi	r25, 0x05	; 5
- 168:	90 93 8b 00 	sts	0x008B, r25	; 0x80008b <__TEXT_REGION_LENGTH__+0x7e008b>
- 16c:	80 93 8a 00 	sts	0x008A, r24	; 0x80008a <__TEXT_REGION_LENGTH__+0x7e008a>
+ 160:	8c ed       	ldi	r24, 0xDC	; 220
+ 162:	95 e0       	ldi	r25, 0x05	; 5
+ 164:	90 93 8b 00 	sts	0x008B, r25	; 0x80008b <__TEXT_REGION_LENGTH__+0x7e008b>
+ 168:	80 93 8a 00 	sts	0x008A, r24	; 0x80008a <__TEXT_REGION_LENGTH__+0x7e008a>
 	TCNT1 = 0;         // reset timer
- 170:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
- 174:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+ 16c:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
+ 170:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
 	sei();
- 178:	78 94       	sei
- 17a:	08 95       	ret
+ 174:	78 94       	sei
+ 176:	08 95       	ret
 
-0000017c <main>:
+00000178 <main>:
 }
 
 
 int main(void)
 {
 	init();
- 17c:	0e 94 97 00 	call	0x12e	; 0x12e <init>
- 180:	ff cf       	rjmp	.-2      	; 0x180 <main+0x4>
+ 178:	0e 94 95 00 	call	0x12a	; 0x12a <init>
+ 17c:	ff cf       	rjmp	.-2      	; 0x17c <main+0x4>
 
-00000182 <_exit>:
- 182:	f8 94       	cli
+0000017e <_exit>:
+ 17e:	f8 94       	cli
 
-00000184 <__stop_program>:
- 184:	ff cf       	rjmp	.-2      	; 0x184 <__stop_program>
+00000180 <__stop_program>:
+ 180:	ff cf       	rjmp	.-2      	; 0x180 <__stop_program>

@@ -33,7 +33,6 @@ void clock_inc(){ // kleine ungenaue uhr die mitläuft
 ISR (TIMER1_COMPA_vect)
 {
 	// reset timer1
-	PORT(B)=1<<5;
 	clock_inc();
 }
 
