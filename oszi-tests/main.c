@@ -48,7 +48,7 @@ void init(){
 	CONFIG_BYTE(TCCR1A , BIT(COM1A1) | BIT(COM1B1) , BIT(WGM10) | BIT(WGM11));// FastPWM Mode mode TOP determined by ICR1 - non-inverting Compare Output mode
 	CONFIG_BYTE(TCCR1B , BIT(WGM12) | BIT(CS10) , BIT(CS11) | BIT(CS12) | BIT(WGM13));    // set prescaler to 1, FastPWM Mode mode continued
 	CONFIG_BYTE(TIFR1 , BIT(OCF1A) | BIT(OCF1B),0);
-	CONFIG_BYTE(TIMSK1 , BIT(OCIE1A), 0);
+	CONFIG_BYTE(TIMSK0 , BIT(OCIE1A), 0);
 	OCR1A = 5000;      // set count to 1500 us - 90 degree
 	OCR1B = 1500;      // set count to 1500 us - 90 degree
 	TCNT1 = 0;         // reset timer

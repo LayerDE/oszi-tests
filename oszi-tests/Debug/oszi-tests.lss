@@ -89,7 +89,7 @@ Disassembly of section .text:
 
 00000090 <clock_inc>:
 	CONFIG_BYTE(TIFR1 , BIT(OCF1A) | BIT(OCF1B),0);
-	CONFIG_BYTE(TIMSK1 , BIT(OCIE1A), 0);
+	CONFIG_BYTE(TIMSK0 , BIT(OCIE1A), 0);
 	OCR1A = 5000;      // set count to 1500 us - 90 degree
 	OCR1B = 1500;      // set count to 1500 us - 90 degree
 	TCNT1 = 0;         // reset timer
