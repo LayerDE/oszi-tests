@@ -58,6 +58,7 @@ void init(){
 
 int main(void)
 {
+	init();
     /* Replace with your application code */
     while (1) 
     {
