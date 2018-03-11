@@ -27,7 +27,7 @@ unsigned const char SERVO_PIN[4] PROGMEM={0x01,0x02,0x04,0x08};
 #define SERVO_PERIODE (unsigned int)20000/SERVO_COUNT*F_CPU_MHz/PRESCALER
 #define SERVO_CALC(servo,int16) (servo_mid_ram[servo]*F_CPU_MHz/PRESCALER+int16)
 
-int servo_buffer[4];
+int servo_buffer[4]={1500,1500,1500,1500};
 unsigned char precount=0;
 unsigned int seconds=0;
 

@@ -10,7 +10,6 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 Allocating common symbols
 Common symbol       size              file
 
-servo_buffer        0x8               main.o
 servo_min_ram       0x8               main.o
 servo_max_ram       0x8               main.o
 
@@ -23,6 +22,7 @@ Discarded input sections
  .bss           0x00000000        0x0 main.o
  .data.servo_mid_ram
                 0x00000000        0x8 main.o
+ COMMON         0x00000000       0x10 main.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
@@ -326,43 +326,42 @@ END GROUP
  *(.fini0)
                 0x000001f8                _etext = .
 
-.data           0x00800100        0x0 load address 0x000001f8
+.data           0x00800100        0x8 load address 0x000001f8
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
+ .data.servo_buffer
+                0x00800100        0x8 main.o
+                0x00800100                servo_buffer
  *(.gnu.linkonce.d*)
  *(.rodata)
  *(.rodata*)
  *(.gnu.linkonce.r*)
-                0x00800100                . = ALIGN (0x2)
-                0x00800100                _edata = .
-                0x00800100                PROVIDE (__data_end, .)
+                0x00800108                . = ALIGN (0x2)
+                0x00800108                _edata = .
+                0x00800108                PROVIDE (__data_end, .)
 
-.bss            0x00800100       0x1c
-                0x00800100                PROVIDE (__bss_start, .)
+.bss            0x00800108        0x4
+                0x00800108                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.servo_index
-                0x00800100        0x1 main.o
-                0x00800100                servo_index
- .bss.seconds   0x00800101        0x2 main.o
-                0x00800101                seconds
- .bss.precount  0x00800103        0x1 main.o
-                0x00800103                precount
+                0x00800108        0x1 main.o
+                0x00800108                servo_index
+ .bss.seconds   0x00800109        0x2 main.o
+                0x00800109                seconds
+ .bss.precount  0x0080010b        0x1 main.o
+                0x0080010b                precount
  *(COMMON)
- COMMON         0x00800104       0x18 main.o
-                0x00800104                servo_buffer
-                0x0080010c                servo_min_ram
-                0x00800114                servo_max_ram
-                0x0080011c                PROVIDE (__bss_end, .)
+                0x0080010c                PROVIDE (__bss_end, .)
                 0x000001f8                __data_load_start = LOADADDR (.data)
-                0x000001f8                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000200                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0080011c        0x0
+.noinit         0x0080010c        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x0080011c                _end = .
+                0x0080010c                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0

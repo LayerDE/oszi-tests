@@ -3,31 +3,31 @@ oszi-tests.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  0000026c  2**0
+  0 .data         00000008  00800100  000001f8  0000028c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000001f8  00000000  00000000  00000074  2**1
+  1 .text         000001f8  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000001c  00800100  00800100  0000026c  2**0
+  2 .bss          00000004  00800108  00800108  00000294  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  0000026c  2**0
+  3 .comment      00000030  00000000  00000000  00000294  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000029c  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000002c4  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000048  00000000  00000000  000002dc  2**0
+  5 .debug_aranges 00000048  00000000  00000000  00000304  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000007e8  00000000  00000000  00000324  2**0
+  6 .debug_info   000007e8  00000000  00000000  0000034c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000677  00000000  00000000  00000b0c  2**0
+  7 .debug_abbrev 00000677  00000000  00000000  00000b34  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000002cc  00000000  00000000  00001183  2**0
+  8 .debug_line   000002cc  00000000  00000000  000011ab  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000cc  00000000  00000000  00001450  2**2
+  9 .debug_frame  000000cc  00000000  00000000  00001478  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000003e3  00000000  00000000  0000151c  2**0
+ 10 .debug_str    000003e3  00000000  00000000  00001544  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000107  00000000  00000000  000018ff  2**0
+ 11 .debug_loc    00000107  00000000  00000000  00001927  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000038  00000000  00000000  00001a06  2**0
+ 12 .debug_ranges 00000038  00000000  00000000  00001a2e  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -80,13 +80,13 @@ Disassembly of section .text:
   82:	02 c0       	rjmp	.+4      	; 0x88 <__do_copy_data+0x10>
   84:	05 90       	lpm	r0, Z+
   86:	0d 92       	st	X+, r0
-  88:	a0 30       	cpi	r26, 0x00	; 0
+  88:	a8 30       	cpi	r26, 0x08	; 8
   8a:	b1 07       	cpc	r27, r17
   8c:	d9 f7       	brne	.-10     	; 0x84 <__do_copy_data+0xc>
 
 0000008e <__do_clear_bss>:
   8e:	21 e0       	ldi	r18, 0x01	; 1
-  90:	a0 e0       	ldi	r26, 0x00	; 0
+  90:	a8 e0       	ldi	r26, 0x08	; 8
   92:	b1 e0       	ldi	r27, 0x01	; 1
   94:	01 c0       	rjmp	.+2      	; 0x98 <.do_clear_bss_start>
 
@@ -94,7 +94,7 @@ Disassembly of section .text:
   96:	1d 92       	st	X+, r1
 
 00000098 <.do_clear_bss_start>:
-  98:	ac 31       	cpi	r26, 0x1C	; 28
+  98:	ac 30       	cpi	r26, 0x0C	; 12
   9a:	b2 07       	cpc	r27, r18
   9c:	e1 f7       	brne	.-8      	; 0x96 <.do_clear_bss_loop>
   9e:	0e 94 f5 00 	call	0x1ea	; 0x1ea <main>
@@ -110,20 +110,20 @@ unsigned int seconds=0;
 
 void clock_inc(){ // kleine ungenaue uhr die mitläuft
 	if(++precount) return;
-  aa:	80 91 03 01 	lds	r24, 0x0103	; 0x800103 <precount>
+  aa:	80 91 0b 01 	lds	r24, 0x010B	; 0x80010b <precount>
   ae:	8f 5f       	subi	r24, 0xFF	; 255
   b0:	19 f0       	breq	.+6      	; 0xb8 <clock_inc+0xe>
-  b2:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <precount>
+  b2:	80 93 0b 01 	sts	0x010B, r24	; 0x80010b <precount>
   b6:	08 95       	ret
 	precount=CLK_PRECOUNT;
   b8:	88 e3       	ldi	r24, 0x38	; 56
-  ba:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <precount>
+  ba:	80 93 0b 01 	sts	0x010B, r24	; 0x80010b <precount>
 	seconds++;
-  be:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <seconds>
-  c2:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <seconds+0x1>
+  be:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <seconds>
+  c2:	90 91 0a 01 	lds	r25, 0x010A	; 0x80010a <seconds+0x1>
   c6:	01 96       	adiw	r24, 0x01	; 1
-  c8:	90 93 02 01 	sts	0x0102, r25	; 0x800102 <seconds+0x1>
-  cc:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <seconds>
+  c8:	90 93 0a 01 	sts	0x010A, r25	; 0x80010a <seconds+0x1>
+  cc:	80 93 09 01 	sts	0x0109, r24	; 0x800109 <seconds>
 	if(seconds%2) PORT(B)=1<<5;
   d0:	80 ff       	sbrs	r24, 0
   d2:	03 c0       	rjmp	.+6      	; 0xda <clock_inc+0x30>
@@ -178,7 +178,7 @@ ISR (TIMER1_COMPA_vect)
  114:	ff 93       	push	r31
 	PORT(C)|=SERVO_PIN[servo_index];
  116:	98 b1       	in	r25, 0x08	; 8
- 118:	e0 91 00 01 	lds	r30, 0x0100	; 0x800100 <__data_end>
+ 118:	e0 91 08 01 	lds	r30, 0x0108	; 0x800108 <__data_end>
  11c:	f0 e0       	ldi	r31, 0x00	; 0
  11e:	e8 59       	subi	r30, 0x98	; 152
  120:	ff 4f       	sbci	r31, 0xFF	; 255
@@ -186,23 +186,23 @@ ISR (TIMER1_COMPA_vect)
  124:	89 2b       	or	r24, r25
  126:	88 b9       	out	0x08, r24	; 8
 	OCR1B=servo_buffer[servo_index++];
- 128:	e0 91 00 01 	lds	r30, 0x0100	; 0x800100 <__data_end>
+ 128:	e0 91 08 01 	lds	r30, 0x0108	; 0x800108 <__data_end>
  12c:	81 e0       	ldi	r24, 0x01	; 1
  12e:	8e 0f       	add	r24, r30
- 130:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_end>
+ 130:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <__data_end>
  134:	f0 e0       	ldi	r31, 0x00	; 0
  136:	ee 0f       	add	r30, r30
  138:	ff 1f       	adc	r31, r31
- 13a:	ec 5f       	subi	r30, 0xFC	; 252
- 13c:	fe 4f       	sbci	r31, 0xFE	; 254
+ 13a:	e0 50       	subi	r30, 0x00	; 0
+ 13c:	ff 4f       	sbci	r31, 0xFF	; 255
  13e:	80 81       	ld	r24, Z
  140:	91 81       	ldd	r25, Z+1	; 0x01
  142:	90 93 8b 00 	sts	0x008B, r25	; 0x80008b <__TEXT_REGION_LENGTH__+0x7e008b>
  146:	80 93 8a 00 	sts	0x008A, r24	; 0x80008a <__TEXT_REGION_LENGTH__+0x7e008a>
 	servo_index&=0x0F;
- 14a:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_end>
+ 14a:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <__data_end>
  14e:	8f 70       	andi	r24, 0x0F	; 15
- 150:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_end>
+ 150:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <__data_end>
 	// reset timer1
 	clock_inc();
  154:	0e 94 55 00 	call	0xaa	; 0xaa <clock_inc>
